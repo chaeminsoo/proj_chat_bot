@@ -16,17 +16,7 @@ not_found_ans = [
     'Is there any typo in your respones?'
 ]
 
-# print('***Except word "I" please us SMALL LETTER***\nGood day! What are you looking for to day?\nTop? Bottom? Shoes?')
-# ans = input('>')
-#-------------------------------------------------------------------------------------------------------------------
-
 def cate_answer(answ):
-    if answ.find('I') != -1:
-        isithere = True
-    else:
-        isithere = False
-
-
     found_keys=[]
     for keylist in category:
         for key in keylist:
@@ -56,21 +46,27 @@ def color_answer(answ):
     for coloer in colors:
         pp = re.compile(coloer)
         detected_color = pp.search(answ)
+        
         try:
+            cnt=0
             if detected_color.group() in colors:
                 brain.append(detected_color.group())
-                print('Do you want',detected_color.group(),brain[0],'?\nYes(1), No(0)')
+                print('Do you want',detected_color.group(),brain[0],'?\nYes(1) or No(0)')
                 yn_ans = int(input('>'))
                 final_answer(yn_ans)            
 
-            else:
+        except AttributeError:
+            continue
+        
+        try:
+            if detected_color.group() not in colors:
                 print('Sorry, there is no such product available.')
         except AttributeError:
             continue
 
 def final_answer(num):
     if num ==1:
-        print('Here is search result of',brain[1],brain[0],'.')
+        print('Here is the search result of',brain[1],brain[0],'.')
     elif num == 0:
         while brain:
             del brain[0]            
