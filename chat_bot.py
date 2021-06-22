@@ -30,9 +30,12 @@ def cate_answer(answ):
     if found_keys:
         if len(found_keys) == 1:
             brain.append(found_keys[0])
-            print('What color of',found_keys[0],'are you looking for?')
+            print('Among the red, blue and green,\nWhat color of',found_keys[0],'are you looking for?')
             color_ans = input('>')
-            color_answer(color_ans)
+            if color_ans in colors:
+                color_answer(color_ans)
+            else:
+                print('Sorry, there is no such product available.')
         
         else:
             print('Amog the top, bottom and shoes, choose one category.')
@@ -57,16 +60,13 @@ def color_answer(answ):
 
         except AttributeError:
             continue
-        
-        try:
-            if detected_color.group() not in colors:
-                print('Sorry, there is no such product available.')
-        except AttributeError:
-            continue
 
 def final_answer(num):
+    ref_address = 'https://search.musinsa.com/search/musinsa/integration?type=&q='#red+jorden'
+    real_address = ref_address+brain[1]+'+'+brain[0]
     if num ==1:
-        print('Here is the search result of',brain[1],brain[0],'.')
+        print('Here is the search result of',brain[1],brain[0],'.\n>',real_address)
+        
     elif num == 0:
         while brain:
             del brain[0]            
